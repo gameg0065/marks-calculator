@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <sstream>
 
 #include "readAndPrint.h"
 #include "variables.h"
@@ -55,7 +56,10 @@ vector<RawData> ValidateData(vector<RawData> rawData)
             for (int i = 2; i < rawData.size(); i++)
             {
                 rawData[i].type = "number";
-                if (rawData[i].data.length() > 2 || rawData[i].data.length() == 0 || stoi(rawData[i].data) > 10 || stoi(rawData[i].data) < 0)
+                istringstream iss(rawData[i].data);
+                int number;
+                iss >> number;
+                if (iss.fail() || number > 10 || number < 0)
                     rawData = GetValidDataFromUser(rawData);
                 else
                     rawData[i].isValid = true;
@@ -110,7 +114,7 @@ void ReadUserInput() {
         }
 
         rawData.push_back(tempData);
-        
+
         if (cin.get() == '\n' )
         {
             SaveData(ValidateData(rawData));
