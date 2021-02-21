@@ -27,6 +27,7 @@ struct RawData
 struct ValidateData
 {
     string error;
+    vector<RawData> rawData;
     bool isValid;
 };
 

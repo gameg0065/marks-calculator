@@ -36,18 +36,21 @@ ValidateData IsDataValid(vector<RawData> rawData)
     if (rawData[0].data.length() < 3) {
         rawData[0].type = "name";
         returnValue.error = "name is not long enought";
+        returnValue.rawData = rawData;
         return returnValue;
     }
     else if (rawData[1].data.length() < 3)
     {
         rawData[0].isValid = true;
-        rawData[1].type = "surnmae";
+        rawData[1].type = "surname";
         returnValue.error = "surname is not long enought";
+        returnValue.rawData = rawData;
         return returnValue;
     } else {
         rawData[1].isValid = true;
         if (rawData.size() < 4) {
             returnValue.error = "No enought grades :(";
+            returnValue.rawData = rawData;
             return returnValue;
         }
         for (int i = 2; i < rawData.size(); i++)
@@ -55,6 +58,7 @@ ValidateData IsDataValid(vector<RawData> rawData)
             rawData[i].type = "number";
             if (rawData[i].data.length() != 1 || stoi(rawData[i].data) > 10 || stoi(rawData[i].data) < 0) {
                 returnValue.error = "Grade is not a number";
+                returnValue.rawData = rawData;
                 return returnValue;
             } else {
                 rawData[i].isValid = true;
@@ -62,6 +66,7 @@ ValidateData IsDataValid(vector<RawData> rawData)
         }
     }
     returnValue.isValid = true;
+    returnValue.rawData = rawData;
     return returnValue;
 }
 
@@ -71,6 +76,21 @@ void Clear()
     system("clear");
 }
 
+vector<RawData> GetValidDataFromUser(vector<RawData> rawData)
+{
+    for (int i = 0; i < rawData.size(); i++) {
+        if(!rawData[i].isValid) {
+            if (rawData[i].type == "name")
+                cout << "Enter correct name" << endl;
+            else if (rawData[i].type == "surname")
+                cout << "Enter correct surname" << endl;
+            else 
+                cout << "Enter correct mark" << endl;
+            cin >> rawData[i].data;
+            return rawData;
+        }
+    }
+}
 
 void ReadUserInput() {
     // Clear();
@@ -93,7 +113,10 @@ void ReadUserInput() {
         if (cin.get() == '\n')
         {
             // Clear();
-            auto temp = IsDataValid(rawData);
+            ValidateData temp = IsDataValid(rawData);
+            do {
+                cout << "not valid" << endl;
+            } while (!IsDataValid(GetValidDataFromUser(temp.rawData)).isValid);
             cout << (temp.isValid == 0 ? "nope" : "jep") << " " << temp.error << endl;
             rawData.clear();
         }
