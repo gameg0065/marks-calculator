@@ -24,13 +24,6 @@ struct RawData
     bool isValid = false;
 };
 
-struct ValidateData
-{
-    string error;
-    vector<RawData> rawData;
-    bool isValid;
-};
-
 static vector<Student> students;
 
 #endif

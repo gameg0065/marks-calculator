@@ -4,5 +4,6 @@
 
 void print();
 void ReadUserInput();
+vector<RawData> GetValidDataFromUser(vector<RawData> rawData);
 
 #endif
