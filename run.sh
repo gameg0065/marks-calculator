@@ -1,6 +1,7 @@
 #!/bin/bash
 
 readonly fileName=main
+rm -rf make
 make
 ./$fileName
 

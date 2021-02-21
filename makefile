@@ -1,9 +1,9 @@
-main: readAndPrint.o variables.o
-	g++ -std=c++0x -o main main.cpp readAndPrint.o
+main: readAndPrint.o calcFunctions.o variables.o
+	g++ -std=c++0x -o main main.cpp readAndPrint.o calcFunctions.o
 readAndPrint:
 	g++ -std=c++0x -c readAndPrint.cpp
-# functions:
-# 	g++ -c functions.cpp
+calcFunctions:
+	g++ -c calcFunctions.cpp
 # main:
 # 	g++ -c main.cpp
 variables:

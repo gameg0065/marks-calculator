@@ -94,7 +94,8 @@ vector<RawData> GetValidDataFromUser(vector<RawData> rawData)
     return rawData;
 }
 
-void ReadUserInput() {
+vector<Student> ReadUserInput()
+{
     Clear();
     vector<RawData> rawData;
     cout << "Input some data" << endl;
@@ -105,7 +106,7 @@ void ReadUserInput() {
 
         cin >> tempData.data;
 
-        if (tempData.data == "stop")
+        if (tempData.data == "stop" || tempData.data == "nope")
         {
             if (rawData.size() > 3) {
                 SaveData(ValidateData(rawData));
@@ -123,30 +124,25 @@ void ReadUserInput() {
             cout << "Another person:" << endl;
         }
     }
+    return students;
 }
-
-
 
 // TEMP:
 
-void PrintData()
+void PrintData(vector<Student> localStudents)
 {
     cout << endl
          << "RESULTS:" << endl
          << endl;
-    for (int i = 0; i < students.size(); i++)
+    for (int i = 0; i < localStudents.size(); i++)
     {
-        cout << "Vardas:  " << students[i].firstName << endl;
-        cout << "Pavarde:  " << students[i].lastName << endl;
-        for (int y = 0; y < students[i].grades.size(); y++)
+        cout << "Vardas:  " << localStudents[i].firstName << endl;
+        cout << "Pavarde:  " << localStudents[i].lastName << endl;
+        for (int y = 0; y < localStudents[i].grades.size(); y++)
         {
-            cout << "Grade:  " << students[i].grades[y] << endl;
+            cout << "Grade:  " << localStudents[i].grades[y] << endl;
         }
+        cout << "Galutinis:  " << localStudents[i].finalGrade << endl;
+        cout << "mediana:  " << localStudents[i].medianGrade << endl;
     }
-}
-
-void print()
-{
-    cout << "just testing" << endl;
-    PrintData();
 }

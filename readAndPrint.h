@@ -2,8 +2,8 @@
 #define READANDPRINT_H
 #include "variables.h"
 
-void print();
-void ReadUserInput();
+void PrintData(vector<Student> localStudents);
+vector<Student> ReadUserInput();
 vector<RawData> GetValidDataFromUser(vector<RawData> rawData);
 
 #endif

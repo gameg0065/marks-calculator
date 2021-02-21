@@ -12,7 +12,7 @@ struct Student
     string firstName;
     string lastName;
     vector<int> grades;
-    double meanGrade;
+    double arithMeanGrade;
     double finalGrade;
     double medianGrade;
 };
