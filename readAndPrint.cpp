@@ -10,11 +10,8 @@
 
 using namespace std;
 
-Student students[MaxNumberOfStudents];
-
 void SaveData(vector<RawData> rawData) {
     Student newStudent;
-
     for (int i = 0; i < rawData.size(); i++)
     {
         if (rawData[i].type == "name") {
@@ -23,26 +20,10 @@ void SaveData(vector<RawData> rawData) {
         else if (rawData[i].type == "surname")
             newStudent.lastName = rawData[i].data;
         else {
-            bool isSaved = false;
-            for (int y = 0; y < 100; y++)
-            {
-                if (newStudent.grades[y] == -1 && !isSaved)
-                {
-                    newStudent.grades[y] = (stoi(rawData[i].data) == 0 ? GenerateRandomNumber() : stoi(rawData[i].data));
-                    isSaved = true;
-                    break;
-                }
-            }
+            newStudent.grades.push_back(stoi(rawData[i].data) == 0 ? GenerateRandomNumber() : stoi(rawData[i].data));
         }
     }
-    for (int i = 0; i < 100; i++)
-    {
-        if (students[i].firstName.empty())
-        {
-            students[i] = newStudent;
-            break;
-        }
-    }
+    students.push_back(newStudent);
 }
 
 vector<RawData> ValidateData(vector<RawData> rawData)
@@ -190,7 +171,7 @@ bool AskIfFinalGradeIsMean() {
     return userInput == 1;
 }
 
-void ReadUserInput()
+vector<Student> ReadUserInput()
 {
     Clear();
     vector<RawData> rawData;
@@ -219,9 +200,10 @@ void ReadUserInput()
             cout << "Kito asments duomenys:" << endl;
         }
     }
+    return students;
 }
 
-void PrintResult( bool isMean)
+void PrintResult(vector<Student> localStudents, bool isMean)
 {
     Clear();
     int width = WidthOfNameAndSurname;
@@ -230,8 +212,6 @@ void PrintResult( bool isMean)
         << "Galutinis " << (isMean ? "Vid." : "Med.") << endl;
     cout << string(width * 3, '-') << endl
          << endl;;
-
-    for (int i = 0; i < 100; i++)
-        if(!students[i].firstName.empty())
-            cout << left << setw(width) << students[i].firstName << setw(width) << students[i].lastName << fixed << setprecision(2) << (isMean ? students[i].finalGrade : students[i].medianGrade) << endl;
+    for (int i = 0; i < localStudents.size(); i++)
+        cout << left << setw(width) << localStudents[i].firstName << setw(width) << localStudents[i].lastName << fixed <<setprecision(2) << (isMean ? localStudents[i].finalGrade : localStudents[i].medianGrade) << endl;
 }
