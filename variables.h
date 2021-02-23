@@ -6,6 +6,7 @@
 using namespace std;
 
 const int MinNumberOfLetters = 3;
+const int WidthOfNameAndSurname = 18;
 
 struct Student
 {

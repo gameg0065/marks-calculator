@@ -2,8 +2,13 @@
 #define READANDPRINT_H
 #include "variables.h"
 
-void PrintData(vector<Student> localStudents);
+void Clear();
+bool MenuOptions();
+void StartProgram();
+void PrintWelcomeText();
+void PrintResult(vector<Student> localStudents, bool isMean);
 vector<Student> ReadUserInput();
 vector<RawData> GetValidDataFromUser(vector<RawData> rawData);
+bool AskIfFinalGradeIsMean();
 
 #endif

@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <iomanip>
 
 #include "readAndPrint.h"
 #include "variables.h"
@@ -70,6 +71,69 @@ vector<RawData> ValidateData(vector<RawData> rawData)
     return rawData;
 }
 
+void PrintWelcomeText() {
+    Clear();
+    string name = "Pažymių skaičiuokė";
+    int whiteSpace = (WidthOfNameAndSurname * 3 - name.length() + 4) / 2 - 1;
+    cout << string(WidthOfNameAndSurname * 3, '\\') << endl;
+    for (int i = 0; i < 3; i++)
+        cout << '*' << string(WidthOfNameAndSurname * 3 - 2, ' ') << '*' << endl;
+    cout << '*' << string(whiteSpace, ' ') << name << string(whiteSpace, ' ') << '*' << endl;
+    for (int i = 0; i < 3; i++)
+        cout << '*' << string(WidthOfNameAndSurname * 3 - 2, ' ') << '*' << endl;
+    cout << string(WidthOfNameAndSurname * 3, '/') << endl;
+}
+
+bool MenuOptions()
+{
+    int userInput;
+    cout << endl << "Pasirinkite norimą funkciją" << endl;
+
+    do
+    {
+        cout << "Pažymių skaičiuoklė - 1" << endl;
+        cout << "Vartotojo vadovas - 2" << endl;
+        cin >> userInput;
+    } while (!(userInput == 1 || userInput == 2));
+
+    return userInput == 1;
+}
+
+void Instrukcions() {
+    cout << string(WidthOfNameAndSurname * 3, '\\') << endl
+         << endl;
+    cout << "1. Paleidus programa iskarto pradedamas duomenu ivedimas: Vardas Pavarde n - pazymiu ir egzamino pazymis." << endl;
+    cout << "2. Paskutinis skaitmuo nuolatos laikomas egzamino pazymiu" << endl;
+    cout << "3. Norint, kad programa sugeneruotu atsitiktinius skaicius uztenka kaip pazymi parasyti 0" << endl;
+    cout << "4. Sekmingai ivedus asmeni, programa automatiskai klausia antro asmens. Norint baigti duomenu ivedima uztenka parasyti - 'stop' arba 'baigti'" << endl;
+    cout << endl << "Norint iseiti is vartotojo vadovo parasykite - exit" << endl;
+    string userInput;
+
+    do
+    {
+        cin >> userInput;
+    } while (userInput != "exit");
+
+}
+
+void StartProgram()
+{
+    while (true)
+    {
+        PrintWelcomeText();
+        auto selectedOption = MenuOptions();
+        if (selectedOption)
+        {
+            break;
+        }
+        else
+        {
+            Clear();
+            Instrukcions();
+        }
+    }
+}
+
 // TODO : Find way to determine operating sistem system("cls");
 void Clear()
 {
@@ -95,11 +159,23 @@ vector<RawData> GetValidDataFromUser(vector<RawData> rawData)
     return rawData;
 }
 
+bool AskIfFinalGradeIsMean() {
+    int userInput;
+
+    do
+    {
+        cout << "Skaičiuoti vidurki - 1, mediana - 2" << endl;
+        cin >> userInput;
+    } while (!(userInput == 1 || userInput == 2));
+
+    return userInput == 1;
+}
+
 vector<Student> ReadUserInput()
 {
     Clear();
     vector<RawData> rawData;
-    cout << "Input some data" << endl;
+    cout << "Iveskite varda pavarde pazymius ( per tarpa ) ir galutini pazymi. ( pvz: vardenis pavardenis 5 6 7 10 )" << endl;
 
     while (true)
     {
@@ -107,7 +183,7 @@ vector<Student> ReadUserInput()
 
         cin >> tempData.data;
 
-        if (tempData.data == "stop" || tempData.data == "nope")
+        if (tempData.data == "stop" || tempData.data == "nope" || tempData.data == "baigti")
         {
             if (rawData.size() > 3) {
                 SaveData(ValidateData(rawData));
@@ -121,29 +197,21 @@ vector<Student> ReadUserInput()
         {
             SaveData(ValidateData(rawData));
             rawData.clear();
-            Clear();
-            cout << "Another person:" << endl;
+            cout << "Kito asments duomenys:" << endl;
         }
     }
     return students;
 }
 
-// TEMP:
-
-void PrintData(vector<Student> localStudents)
+void PrintResult(vector<Student> localStudents, bool isMean)
 {
+    Clear();
+    int width = WidthOfNameAndSurname;
     cout << endl
-         << "RESULTS:" << endl
-         << endl;
+        << left << setw(width) << "Vardas" << setw(width) << "Pavarde"
+        << "Galutinis " << (isMean ? "Vid." : "Med.") << endl;
+    cout << string(width * 3, '-') << endl
+         << endl;;
     for (int i = 0; i < localStudents.size(); i++)
-    {
-        cout << "Vardas:  " << localStudents[i].firstName << endl;
-        cout << "Pavarde:  " << localStudents[i].lastName << endl;
-        for (int y = 0; y < localStudents[i].grades.size(); y++)
-        {
-            cout << "Grade:  " << localStudents[i].grades[y] << endl;
-        }
-        cout << "Galutinis:  " << localStudents[i].finalGrade << endl;
-        cout << "mediana:  " << localStudents[i].medianGrade << endl;
-    }
+        cout << left << setw(width) << localStudents[i].firstName << setw(width) << localStudents[i].lastName << fixed <<setprecision(2) << (isMean ? localStudents[i].finalGrade : localStudents[i].medianGrade) << endl;
 }

@@ -41,11 +41,11 @@ vector<Student> FindMedian(vector<Student> localStudens)
     return localStudens;
 }
 
-vector<Student> FindFinalGrade(vector<Student> localStudens)
+vector<Student> FindFinalGrade(vector<Student> localStudens, bool isMean)
 {
     for (int i = 0; i < localStudens.size(); i++)
     {
-        localStudens[i].finalGrade = localStudens[i].medianGrade * 0.4 + 0.6 * localStudens[i].grades[localStudens[i].grades.size() - 1];
+        localStudens[i].finalGrade = (isMean ? localStudens[i].arithMeanGrade: localStudens[i].medianGrade ) * 0.4 + 0.6 * localStudens[i].grades[localStudens[i].grades.size() - 1];
     }
 
     return localStudens;

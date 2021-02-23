@@ -6,9 +6,10 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
+    StartProgram();
     students = ReadUserInput();
-    students = FindArithmeticMean(students);
-    students = FindMedian(students);
-    students = FindFinalGrade(students);
-    PrintData(students);
+    auto isMean = AskIfFinalGradeIsMean();
+    students = isMean ? FindArithmeticMean(students) : FindMedian(students);
+    students = FindFinalGrade(students, isMean);
+    PrintResult(students, isMean);
 }
