@@ -147,11 +147,11 @@ vector<RawData> GetValidDataFromUser(vector<RawData> rawData)
         if (!rawData[i].isValid)
         {
             if (rawData[i].type == "name")
-                cout << "Enter correct name" << endl;
+                cout << "Iveskite teisinga varda" << endl;
             else if (rawData[i].type == "surname")
-                cout << "Enter correct surname" << endl;
+                cout << "Iveskite teisinga pavarde" << endl;
             else 
-                cout << "Enter correct mark" << endl;
+                cout << "Iveskite teisinga pazymi" << endl;
             cin >> rawData[i].data;
             return ValidateData(rawData);
         }
