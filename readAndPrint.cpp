@@ -5,6 +5,7 @@
 
 #include "readAndPrint.h"
 #include "variables.h"
+#include "randomGenerator.h"
 
 using namespace std;
 
@@ -18,7 +19,7 @@ void SaveData(vector<RawData> rawData) {
         else if (rawData[i].type == "surname")
             newStudent.lastName = rawData[i].data;
         else {
-            newStudent.grades.push_back(stoi(rawData[i].data));
+            newStudent.grades.push_back(stoi(rawData[i].data) == 0 ? GenerateRandomNumber() : stoi(rawData[i].data));
         }
     }
     students.push_back(newStudent);
