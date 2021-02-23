@@ -3,50 +3,70 @@
 
 using namespace std;
 
-vector<Student> FindArithmeticMean(vector<Student> localStudens)
+int CountGrades(int m)
 {
-    for (int i = 0; i < localStudens.size(); i++)
+    int number = 0;
+    for (int i = 0; i < 100; i++)
     {
-        double result = 0;
-        for (int y = 0; y < localStudens[i].grades.size() - 1; y++)
+        if (students[m].grades[i] != -1)
+            number++;
+    }
+    return number;
+}
+
+void FindArithmeticMean()
+{
+    for (int i = 0; i < 100; i++)
+    {
+        if (!students[i].firstName.empty())
         {
-            result += localStudens[i].grades[y];
+            double result = 0;
+            for (int y = 0; y < CountGrades(i) - 1; y++)
+            {
+                result += students[i].grades[y];
+                cout << result << endl;
+            }
+            students[i].arithMeanGrade = result / (CountGrades(i) - 1);
         }
-        localStudens[i].arithMeanGrade = result / (localStudens[i].grades.size() - 1);
     }
-    return localStudens;
 }
 
-vector<Student> SortGrades(vector<Student> localStudens)
-{
-    for (int i = 0; i < localStudens.size(); i++)
-    {
-        sort(localStudens[i].grades.begin(), localStudens[i].grades.end() - 1);
-    }
 
-    return localStudens;
+void SortGrades()
+{
+    for (int i = 0; i < 100; i++)
+    {
+        if (!students[i].firstName.empty())
+        {
+            for (int step = 0; step < CountGrades(i) - 2; ++step)
+            {
+                for (int y = 0; y < CountGrades(i) - 1 - step - 1; ++y)
+                {
+                    if (students[i].grades[y] > students[i].grades[y + 1])
+                        swap(students[i].grades[y], students[i].grades[y + 1]);
+                }
+            }
+        }
+    }
 }
 
-vector<Student> FindMedian(vector<Student> localStudens)
-{
-    localStudens = SortGrades(localStudens);
-
-    for (int i = 0; i < localStudens.size(); i++)
+void FindMedian() {
+    SortGrades();
+    for (int i = 0; i < 100; i++)
     {
-        if ((localStudens[i].grades.size() - 1) % 2 == 0) 
-            localStudens[i].medianGrade = (localStudens[i].grades[(localStudens[i].grades.size() - 1) / 2] + localStudens[i].grades[(localStudens[i].grades.size() - 1) / 2 - 1]) / 2.0;
-         else
-            localStudens[i].medianGrade = localStudens[i].grades[(localStudens[i].grades.size() - 1) / 2];
+        if(!students[i].firstName.empty()) {
+            if ((CountGrades(i) - 1) % 2 == 0) 
+                students[i].medianGrade = (students[i].grades[(CountGrades(i) - 1) / 2] + students[i].grades[(CountGrades(i) - 1) / 2 - 1]) / 2.0;
+            else
+                students[i].medianGrade = students[i].grades[(CountGrades(i) - 1) / 2];
+        }
     }
-    return localStudens;
 }
 
-vector<Student> FindFinalGrade(vector<Student> localStudens, bool isMean)
+void FindFinalGrade(bool isMean)
 {
-    for (int i = 0; i < localStudens.size(); i++)
+    for (int i = 0; i < 100; i++)
     {
-        localStudens[i].finalGrade = (isMean ? localStudens[i].arithMeanGrade: localStudens[i].medianGrade ) * 0.4 + 0.6 * localStudens[i].grades[localStudens[i].grades.size() - 1];
+        students[i].finalGrade = (isMean ? students[i].arithMeanGrade: students[i].medianGrade ) * 0.4 + 0.6 * students[i].grades[CountGrades(i) - 1];
     }
-
-    return localStudens;
 }
