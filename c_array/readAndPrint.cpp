@@ -6,7 +6,7 @@
 
 #include "readAndPrint.h"
 #include "variables.h"
-#include "randomGenerator.h"
+#include "../randomGenerator.h"
 
 using namespace std;
 
