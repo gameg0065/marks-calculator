@@ -1,9 +1,10 @@
 #!/bin/bash
 
-readonly fileName=main
-rm -rf make
-make
-./$fileName
-
-# g++ -std=c++0x main.cpp tests/tests.cpp -lgtest -lgtest_main -pthread -o tests/tests
-# ./tests/tests
+if [ $1 == "tests" ]; then
+   g++ -std=c++0x calcFunctions.cpp tests/tests.cpp -lgtest -lgtest_main -pthread -o tests/tests
+    ./tests/tests
+else
+    make
+    ./main
+    make clean
+fi

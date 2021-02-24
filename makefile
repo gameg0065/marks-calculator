@@ -6,8 +6,6 @@ calcFunctions:
 	g++ -c calcFunctions.cpp
 randomGenerator:
 	g++ -c randomGenerator.cpp
-# main:
-# 	g++ -c main.cpp
 variables:
 	g++ -std=c++0x -c variables.cpp
 clean:
