@@ -6,5 +6,4 @@ if [ $1 == "tests" ]; then
 else
     make
     ./main
-    make clean
 fi
