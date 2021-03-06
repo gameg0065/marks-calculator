@@ -93,3 +93,4 @@ arba (Mac ar Linux)
 
 - [v0.1](https://github.com/gameg0065/marks-calculator/releases/tag/0.1) Pradinė sistemos versija.
 - [v0.2](https://github.com/gameg0065/marks-calculator/releases/tag/0.2) Patobulinta sistemos versija leidzianti nuskaityti failus.
+- [v0.3](https://github.com/gameg0065/marks-calculator/releases/tag/0.2) Klaidu metimas.
