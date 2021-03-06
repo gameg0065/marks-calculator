@@ -1,0 +1,4 @@
+Vardas Pavarde n1 n2 n3 n4 n5 n6 egz
+Tomas Kvedaravicius 2 5 6 7 4 3 1 2 5 6 7 4 3 1 2 5 6 7 4 3 1 2 5 6 7 4 3 1
+Auguste Macijauskaite 2 5 6 7 4 3 1
+Augusitnas Basanavicius 2 5 6 7 4 3 2

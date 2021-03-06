@@ -7,6 +7,7 @@ using namespace std;
 
 const int MinNumberOfLetters = 3;
 const int WidthOfNameAndSurname = 18;
+const string FileOuputPath = "rezultatai.txt";
 
 struct Student
 {

@@ -3,7 +3,7 @@
 
 using namespace std;
 
-vector<Student> FindArithmeticMean(vector<Student> localStudens)
+vector<Student> FindArithmeticMean(vector<Student> &localStudens)
 {
     for (int i = 0; i < localStudens.size(); i++)
     {
@@ -17,7 +17,7 @@ vector<Student> FindArithmeticMean(vector<Student> localStudens)
     return localStudens;
 }
 
-vector<Student> SortGrades(vector<Student> localStudens)
+vector<Student> SortGrades(vector<Student> &localStudens)
 {
     for (int i = 0; i < localStudens.size(); i++)
     {
@@ -27,25 +27,31 @@ vector<Student> SortGrades(vector<Student> localStudens)
     return localStudens;
 }
 
-vector<Student> FindMedian(vector<Student> localStudens)
+bool compareStudents(Student a, Student b)
+{
+    return a.firstName.compare(b.firstName) < 0;
+}
+
+vector<Student> FindMedian(vector<Student> &localStudens)
 {
     localStudens = SortGrades(localStudens);
 
     for (int i = 0; i < localStudens.size(); i++)
     {
-        if ((localStudens[i].grades.size() - 1) % 2 == 0) 
+        if ((localStudens[i].grades.size() - 1) % 2 == 0)
             localStudens[i].medianGrade = (localStudens[i].grades[(localStudens[i].grades.size() - 1) / 2] + localStudens[i].grades[(localStudens[i].grades.size() - 1) / 2 - 1]) / 2.0;
-         else
+        else
             localStudens[i].medianGrade = localStudens[i].grades[(localStudens[i].grades.size() - 1) / 2];
     }
     return localStudens;
 }
 
-vector<Student> FindFinalGrade(vector<Student> localStudens, bool isMean)
+vector<Student> FindFinalGrade(vector<Student> &localStudens, bool isMean)
 {
     for (int i = 0; i < localStudens.size(); i++)
     {
-        localStudens[i].finalGrade = (isMean ? localStudens[i].arithMeanGrade: localStudens[i].medianGrade ) * 0.4 + 0.6 * localStudens[i].grades[localStudens[i].grades.size() - 1];
+        sort(localStudens.begin(), localStudens.end(), compareStudents);
+        localStudens[i].finalGrade = (isMean ? localStudens[i].arithMeanGrade : localStudens[i].medianGrade) * 0.4 + 0.6 * localStudens[i].grades[localStudens[i].grades.size() - 1];
     }
 
     return localStudens;
