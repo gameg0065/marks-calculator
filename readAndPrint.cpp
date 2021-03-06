@@ -37,40 +37,45 @@ vector<Student> ReadFromFile(string path)
 {
     ifstream file;
     file.open(path);
-
-    if (file.is_open())
+    try
     {
-        string temp;
-        getline(file, temp);
-        vector<RawData> rawData;
-
-        while (true)
+        if (file.is_open())
         {
-            RawData tempData;
+            string temp;
+            getline(file, temp);
+            vector<RawData> rawData;
 
-            file >> tempData.data;
-
-            if (tempData.data.empty() && file.get() != '\n')
+            while (true)
             {
-                SaveData(ValidateDataForFile(rawData));
-                break;
-            }
+                RawData tempData;
 
-            rawData.push_back(tempData);
+                file >> tempData.data;
 
-            if (file.get() == '\n')
-            {
-                SaveData(ValidateDataForFile(rawData));
-                rawData.clear();
+                if (tempData.data.empty() && file.get() != '\n')
+                {
+                    SaveData(ValidateDataForFile(rawData));
+                    break;
+                }
+
+                rawData.push_back(tempData);
+
+                if (file.get() == '\n')
+                {
+                    SaveData(ValidateDataForFile(rawData));
+                    rawData.clear();
+                }
             }
         }
+        else
+            throw runtime_error("Error opening file");
+
+        file.close();
     }
-    else
+    catch (exception &e)
     {
-        cout << "Error opening file" << endl;
+        cout << e.what() << endl;
     }
 
-    file.close();
     return students;
 }
 
@@ -336,21 +341,28 @@ void PrintResultToFile(vector<Student> localStudents, bool isMean)
 {
     ofstream file;
     file.open(FileOuputPath);
-    if (file.is_open())
+    try
     {
-        int width = WidthOfNameAndSurname;
-        file << endl
-             << left << setw(width) << "Vardas" << setw(width) << "Pavarde"
-             << "Galutinis " << (isMean ? "Vid." : "Med.") << endl;
-        file << string(width * 3, '-') << endl
-             << endl;
-        ;
-        for (int i = 0; i < localStudents.size(); i++)
-            file << left << setw(width) << localStudents[i].firstName << setw(width) << localStudents[i].lastName << fixed << setprecision(2) << (isMean ? localStudents[i].finalGrade : localStudents[i].medianGrade) << endl;
+        if (file.is_open())
+        {
+            int width = WidthOfNameAndSurname;
+            file << endl
+                 << left << setw(width) << "Vardas" << setw(width) << "Pavarde"
+                 << "Galutinis " << (isMean ? "Vid." : "Med.") << endl;
+            file << string(width * 3, '-') << endl
+                 << endl;
+            ;
+            for (int i = 0; i < localStudents.size(); i++)
+                file << left << setw(width) << localStudents[i].firstName << setw(width) << localStudents[i].lastName << fixed << setprecision(2) << (isMean ? localStudents[i].finalGrade : localStudents[i].medianGrade) << endl;
+        }
+        else
+        {
+            throw runtime_error("Error opening file");
+        }
+        file.close();
     }
-    else
+    catch (exception &e)
     {
-        cout << "Error opening file" << endl;
+        cout << e.what() << endl;
     }
-    file.close();
 }
