@@ -7,7 +7,7 @@ using namespace std;
 int main(int argc, char **argv)
 {
     StartProgram();
-    students = ReadFromFile() ? ReadFromFile("data/kursiokai.txt") : ReadUserInput();
+    students = ReadFromFile() ? ReadFromFile("data/kursiokai1.txt") : ReadUserInput();
     auto isMean = AskIfFinalGradeIsMean();
     students = isMean ? FindArithmeticMean(students) : FindMedian(students);
     students = FindFinalGrade(students, isMean);
