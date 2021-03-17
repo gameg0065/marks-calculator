@@ -13,11 +13,10 @@ vector<Student> FindArithmeticMean(vector<Student> &localStudens)
     for (int i = 0; i < localStudens.size(); i++)
     {
         double result = 0;
-        for (int y = 0; y < localStudens[i].grades.size() - 1; y++)
-        {
+        int size = localStudens[i].grades.size() - 1;
+        for (int y = 0; y < size; y++)
             result += localStudens[i].grades[y];
-        }
-        localStudens[i].arithMeanGrade = result / (localStudens[i].grades.size() - 1);
+        localStudens[i].homeWorkGrade = result / size;
     }
     return localStudens;
 }
@@ -47,10 +46,9 @@ vector<Student> FindMedian(vector<Student> &localStudens)
 
     for (int i = 0; i < localStudens.size(); i++)
     {
-        if ((localStudens[i].grades.size() - 1) % 2 == 0)
-            localStudens[i].medianGrade = (localStudens[i].grades[(localStudens[i].grades.size() - 1) / 2] + localStudens[i].grades[(localStudens[i].grades.size() - 1) / 2 - 1]) / 2.0;
-        else
-            localStudens[i].medianGrade = localStudens[i].grades[(localStudens[i].grades.size() - 1) / 2];
+        int size = localStudens[i].grades.size() - 1;
+        
+        localStudens[i].homeWorkGrade = localStudens[i].grades[size / 2] / (size % 2 == 0 ? 2.0 + localStudens[i].grades[size / 2 - 1] / 2.0 : 1);
     }
     return localStudens;
 }
@@ -65,8 +63,15 @@ vector<Student> FindFinalGrade(vector<Student> &localStudens, bool isMean)
     for (int i = 0; i < localStudens.size(); i++)
     {
         sort(localStudens.begin(), localStudens.end(), compareStudents);
-        localStudens[i].finalGrade = (isMean ? localStudens[i].arithMeanGrade : localStudens[i].medianGrade) * 0.4 + 0.6 * localStudens[i].grades[localStudens[i].grades.size() - 1];
+        localStudens[i].finalGrade =  localStudens[i].homeWorkGrade * 0.4 + 0.6 * localStudens[i].grades[localStudens[i].grades.size() - 1];
     }
 
+    return localStudens;
+}
+
+vector<Student> FindGrades(vector<Student> &localStudens, bool isMean)
+{
+    localStudens = isMean ? FindArithmeticMean(students) : FindMedian(students);
+    localStudens = FindFinalGrade(students, isMean);
     return localStudens;
 }
