@@ -7,6 +7,7 @@ bool MenuOptions();
 vector<Student> ReadFromFile(string path);
 void SaveData(vector<RawData> rawData);
 void StartProgram();
+bool UserInput(string question, string choice);
 bool AskReadFromFile();
 bool OutputToFile();
 void PrintWelcomeText();

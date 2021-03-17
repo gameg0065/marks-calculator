@@ -63,7 +63,7 @@ vector<Student> FindHomeWorkGrade(vector<Student> &localStudens, bool isMean)
         {
             int middleGrade = localStudens[i].grades[size / 2];
 
-            localStudens[i].homeWorkGrade = (size % 2 == 0 ? middleGrade / 2.0 + localStudens[i].grades[size / 2 - 1] / 2.0 : middleGrade);
+            localStudens[i].homeWorkGrade = (size % 2 == 0 ? (middleGrade + localStudens[i].grades[size / 2 - 1]) / 2.0 : middleGrade);
         }
     }
 

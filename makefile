@@ -1,7 +1,9 @@
-main: readAndPrint.o calcFunctions.o randomGenerator.o variables.o main.o
-	g++ -std=c++0x -o main main.cpp readAndPrint.o calcFunctions.o randomGenerator.o
+main: readAndPrint.o readAndPrintFile.o calcFunctions.o randomGenerator.o variables.o main.o
+	g++ -std=c++0x -o main main.cpp readAndPrint.o readAndPrintFile.o calcFunctions.o randomGenerator.o
 readAndPrint:
 	g++ -std=c++0x -c readAndPrint.cpp
+readAndPrintFile:
+	g++ -std=c++0x -c readAndPrintFile.cpp
 calcFunctions:
 	g++ -c calcFunctions.cpp
 randomGenerator:

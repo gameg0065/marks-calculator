@@ -97,7 +97,7 @@ void PrintResultToFile(vector<Student> localStudents, bool isMean)
                  << endl;
             ;
             for (int i = 0; i < localStudents.size(); i++)
-                file << left << setw(width) << localStudents[i].firstName << setw(width) << localStudents[i].lastName << fixed << setprecision(2) << (isMean ? localStudents[i].finalGrade : localStudents[i].medianGrade) << endl;
+                file << left << setw(width) << localStudents[i].firstName << setw(width) << localStudents[i].lastName << fixed << setprecision(2) << localStudents[i].finalGrade << endl;
         }
         else
         {
