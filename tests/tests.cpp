@@ -12,7 +12,7 @@ TEST(VectorInputsSuite, findArithmeticMean1)
     vector<Student> input{newStudent};
     vector<Student> output = FindArithmeticMean(input);
 
-    EXPECT_EQ(output[0].arithMeanGrade, 7) << "The arithmetic mean is not correct";
+    EXPECT_EQ(output[0].homeWorkGrade, 7) << "The arithmetic mean is not correct";
 }
 
 TEST(VectorInputsSuite, findArithmeticMean2)
@@ -23,7 +23,7 @@ TEST(VectorInputsSuite, findArithmeticMean2)
     vector<Student> input{newStudent};
     vector<Student> output = FindArithmeticMean(input);
 
-    EXPECT_EQ(output[0].arithMeanGrade, (17 / 3.0))<< "The arithmetic mean is not correct";
+    EXPECT_EQ(output[0].homeWorkGrade, (17 / 3.0)) << "The arithmetic mean is not correct";
 }
 
 TEST(VectorInputsSuite, findMedian1)
@@ -34,7 +34,7 @@ TEST(VectorInputsSuite, findMedian1)
     vector<Student> input{newStudent};
     vector<Student> output = FindMedian(input);
 
-    EXPECT_EQ(output[0].medianGrade, 4) << "The arithmetic mean is not correct";
+    EXPECT_EQ(output[0].homeWorkGrade, 4) << "The median mean is not correct";
 }
 
 TEST(VectorInputsSuite, findMedian2)
@@ -45,7 +45,7 @@ TEST(VectorInputsSuite, findMedian2)
     vector<Student> input{newStudent};
     vector<Student> output = FindMedian(input);
 
-    EXPECT_EQ(output[0].medianGrade, 3.5) << "The arithmetic mean is not correct";
+    EXPECT_EQ(output[0].homeWorkGrade, 3.5) << "The median mean is not correct";
 }
 
 TEST(VectorInputsSuite, FindFinalGrade1)
@@ -71,7 +71,7 @@ TEST(VectorInputsSuite, FindFinalGrade2)
     vector<Student> output = FindFinalGrade(input, false);
     double result = 3.5 * 0.4 + 0.6 * 9;
 
-    EXPECT_EQ(output[0].finalGrade, result) << "The arithmetic mean is not correct";
+    EXPECT_EQ(output[0].finalGrade, result) << "The median mean is not correct";
 }
 
 int main(int argc, char **argv)

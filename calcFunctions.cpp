@@ -47,8 +47,9 @@ vector<Student> FindMedian(vector<Student> &localStudens)
     for (int i = 0; i < localStudens.size(); i++)
     {
         int size = localStudens[i].grades.size() - 1;
-        
-        localStudens[i].homeWorkGrade = localStudens[i].grades[size / 2] / (size % 2 == 0 ? 2.0 + localStudens[i].grades[size / 2 - 1] / 2.0 : 1);
+        int middleGrade = localStudens[i].grades[size / 2];
+
+        localStudens[i].homeWorkGrade = (size % 2 == 0 ? middleGrade / 2.0 + localStudens[i].grades[size / 2 - 1] / 2.0 : middleGrade);
     }
     return localStudens;
 }
