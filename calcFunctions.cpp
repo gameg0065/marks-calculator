@@ -5,6 +5,11 @@ using namespace std;
 
 vector<Student> FindArithmeticMean(vector<Student> &localStudens)
 {
+    if (localStudens.size() == 0)
+    {
+        throw domain_error("Empty vector");
+    }
+    
     for (int i = 0; i < localStudens.size(); i++)
     {
         double result = 0;
@@ -34,6 +39,10 @@ bool compareStudents(Student a, Student b)
 
 vector<Student> FindMedian(vector<Student> &localStudens)
 {
+    if (localStudens.size() == 0) {
+        throw domain_error("Empty vector");
+    }
+
     localStudens = SortGrades(localStudens);
 
     for (int i = 0; i < localStudens.size(); i++)
@@ -48,6 +57,11 @@ vector<Student> FindMedian(vector<Student> &localStudens)
 
 vector<Student> FindFinalGrade(vector<Student> &localStudens, bool isMean)
 {
+    if (localStudens.size() == 0)
+    {
+        throw domain_error("Empty vector");
+    }
+
     for (int i = 0; i < localStudens.size(); i++)
     {
         sort(localStudens.begin(), localStudens.end(), compareStudents);
