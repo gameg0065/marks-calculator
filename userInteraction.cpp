@@ -86,7 +86,7 @@ bool UserInput(string question, string choice)
     return userInput == 1;
 }
 
-bool OutputToFile()
+bool AskOutputToFile()
 {
     return UserInput("Įrašyti duomenys į failą?", "Taip - 1, Ne - 2");
 }
