@@ -10,6 +10,28 @@
 
 using namespace std;
 
+// TODO : Find way to determine operating sistem system("cls");
+void Clear()
+{
+    system("clear");
+}
+
+bool UserInput(string question, string choice)
+{
+    Clear();
+    int userInput;
+    cout << endl
+         << question << endl;
+
+    do
+    {
+        cout << choice << endl;
+        cin >> userInput;
+    } while (!(userInput == 1 || userInput == 2));
+
+    return userInput == 1;
+}
+
 void PrintWelcomeText()
 {
     Clear();
@@ -70,31 +92,9 @@ bool AskReadFromFile()
     return UserInput("Skaityti is failo?", "Taip - 1, Rankinis įvedimas - 2");
 }
 
-bool UserInput(string question, string choice)
-{
-    Clear();
-    int userInput;
-    cout << endl
-         << question << endl;
-
-    do
-    {
-        cout << choice << endl;
-        cin >> userInput;
-    } while (!(userInput == 1 || userInput == 2));
-
-    return userInput == 1;
-}
-
 bool AskOutputToFile()
 {
     return UserInput("Įrašyti duomenys į failą?", "Taip - 1, Ne - 2");
-}
-
-// TODO : Find way to determine operating sistem system("cls");
-void Clear()
-{
-    system("clear");
 }
 
 bool AskIfFinalGradeIsMean()
