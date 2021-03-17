@@ -12,7 +12,7 @@
 
 using namespace std;
 
-void SaveData(vector<RawData> rawData)
+vector<Student> SaveData(vector<RawData> &rawData, vector<Student> &localStudent)
 {
     Student newStudent;
     for (int i = 0; i < rawData.size(); i++)
@@ -31,10 +31,11 @@ void SaveData(vector<RawData> rawData)
             }
         }
     }
-    students.push_back(newStudent);
+    localStudent.push_back(newStudent);
+    return localStudent;
 }
 
-vector<RawData> ValidateData(vector<RawData> rawData)
+vector<RawData>& ValidateData(vector<RawData> &rawData)
 {
     if (rawData.size() < 4)
     {
@@ -83,7 +84,7 @@ vector<RawData> ValidateData(vector<RawData> rawData)
     return rawData;
 }
 
-vector<RawData> GetValidDataFromUser(vector<RawData> rawData)
+vector<RawData> GetValidDataFromUser(vector<RawData> &rawData)
 {
     for (int i = 0; i < rawData.size(); i++)
     {
@@ -118,7 +119,7 @@ vector<Student> ReadUserInput()
         {
             if (rawData.size() > 3)
             {
-                SaveData(ValidateData(rawData));
+                students = SaveData(ValidateData(rawData), students);
             }
             break;
         }
@@ -127,7 +128,7 @@ vector<Student> ReadUserInput()
 
         if (cin.get() == '\n')
         {
-            SaveData(ValidateData(rawData));
+            SaveData(ValidateData(rawData), students);
             rawData.clear();
             cout << "Kito asments duomenys:" << endl;
         }
@@ -135,7 +136,7 @@ vector<Student> ReadUserInput()
     return students;
 }
 
-void PrintResult(vector<Student> localStudents, bool isMean)
+void PrintResult(vector<Student> &localStudents, bool isMean)
 {
     Clear();
     int width = WidthOfNameAndSurname;

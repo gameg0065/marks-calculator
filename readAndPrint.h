@@ -2,9 +2,9 @@
 #define READANDPRINT_H
 #include "variables.h"
 
-void SaveData(vector<RawData> rawData);
-void PrintResult(vector<Student> localStudents, bool isMean);
+vector<Student> SaveData(vector<RawData> &rawData, vector<Student> &localStudent);
+void PrintResult(vector<Student> &localStudents, bool isMean);
 vector<Student> ReadUserInput();
-vector<RawData> GetValidDataFromUser(vector<RawData> rawData);
+vector<RawData> GetValidDataFromUser(vector<RawData> &rawData);
 
 #endif

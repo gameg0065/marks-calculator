@@ -32,7 +32,7 @@ vector<Student> ReadFromFile(string path)
 
                 if (tempData.data.empty() && file.get() != '\n')
                 {
-                    SaveData(ValidateDataForFile(rawData));
+                    students = SaveData(ValidateDataForFile(rawData), students);
                     break;
                 }
 
@@ -40,7 +40,7 @@ vector<Student> ReadFromFile(string path)
 
                 if (file.get() == '\n')
                 {
-                    SaveData(ValidateDataForFile(rawData));
+                    students = SaveData(ValidateDataForFile(rawData), students);
                     rawData.clear();
                 }
             }
@@ -58,7 +58,7 @@ vector<Student> ReadFromFile(string path)
     return students;
 }
 
-vector<RawData> ValidateDataForFile(vector<RawData> rawData)
+vector<RawData>& ValidateDataForFile(vector<RawData> &rawData)
 {
     if (rawData.size() < 4)
     {
@@ -81,7 +81,7 @@ vector<RawData> ValidateDataForFile(vector<RawData> rawData)
     return rawData;
 }
 
-void PrintResultToFile(vector<Student> localStudents, bool isMean)
+void PrintResultToFile(vector<Student> &localStudents, bool isMean)
 {
     ofstream file;
     file.open(FileOuputPath);
