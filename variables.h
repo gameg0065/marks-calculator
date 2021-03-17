@@ -14,9 +14,8 @@ struct Student
     string firstName;
     string lastName;
     vector<int> grades;
-    double arithMeanGrade;
     double finalGrade;
-    double medianGrade;
+    double homeWorkGrade;
 };
 
 struct RawData
