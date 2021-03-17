@@ -33,52 +33,6 @@ void SaveData(vector<RawData> rawData)
     students.push_back(newStudent);
 }
 
-vector<Student> ReadFromFile(string path)
-{
-    ifstream file;
-    file.open(path);
-    try
-    {
-        if (file.is_open())
-        {
-            string temp;
-            getline(file, temp);
-            vector<RawData> rawData;
-
-            while (true)
-            {
-                RawData tempData;
-
-                file >> tempData.data;
-
-                if (tempData.data.empty() && file.get() != '\n')
-                {
-                    SaveData(ValidateDataForFile(rawData));
-                    break;
-                }
-
-                rawData.push_back(tempData);
-
-                if (file.get() == '\n')
-                {
-                    SaveData(ValidateDataForFile(rawData));
-                    rawData.clear();
-                }
-            }
-        }
-        else
-            throw runtime_error("Error opening file");
-
-        file.close();
-    }
-    catch (exception &e)
-    {
-        cout << e.what() << endl;
-    }
-
-    return students;
-}
-
 vector<RawData> ValidateData(vector<RawData> rawData)
 {
     if (rawData.size() < 4)
@@ -128,29 +82,6 @@ vector<RawData> ValidateData(vector<RawData> rawData)
     return rawData;
 }
 
-vector<RawData> ValidateDataForFile(vector<RawData> rawData)
-{
-    if (rawData.size() < 4)
-    {
-        return rawData;
-    }
-    rawData[0].type = "name";
-    rawData[1].type = "surname";
-    rawData[0].isValid = true;
-    rawData[1].isValid = true;
-
-    for (int i = 2; i < rawData.size(); i++)
-    {
-        rawData[i].type = "number";
-        istringstream iss(rawData[i].data);
-        int number;
-        iss >> number;
-        if (!(iss.fail() || number > 10 || number < 0))
-            rawData[i].isValid = true;
-    }
-    return rawData;
-}
-
 void PrintWelcomeText()
 {
     Clear();
@@ -167,18 +98,7 @@ void PrintWelcomeText()
 
 bool MenuOptions()
 {
-    int userInput;
-    cout << endl
-         << "Pasirinkite norimą funkciją" << endl;
-
-    do
-    {
-        cout << "Pažymių skaičiuoklė - 1" << endl;
-        cout << "Vartotojo vadovas - 2" << endl;
-        cin >> userInput;
-    } while (!(userInput == 1 || userInput == 2));
-
-    return userInput == 1;
+    return UserInput("Pasirinkite norimą funkciją", "Pažymių skaičiuoklė - 1\nVartotojo vadovas - 2");
 }
 
 void Instrukcions()
@@ -217,17 +137,20 @@ void StartProgram()
     }
 }
 
-bool ReadFromFile()
+bool AskReadFromFile()
+{
+    return UserInput("Skaityti is failo?", "Taip - 1, Rankinis įvedimas - 2");
+}
+
+bool UserInput(string question, string choice)
 {
     Clear();
     int userInput;
-    cout << endl
-         << "Skaityti is failo?" << endl;
+    cout << endl << question << endl;
 
     do
     {
-        cout << "Taip - 1" << endl;
-        cout << "Rankinis įvedimas - 2" << endl;
+        cout << choice << endl;
         cin >> userInput;
     } while (!(userInput == 1 || userInput == 2));
 
@@ -236,19 +159,7 @@ bool ReadFromFile()
 
 bool OutputToFile()
 {
-    Clear();
-    int userInput;
-    cout << endl
-         << "Įrašyti duomenys į failą?" << endl;
-
-    do
-    {
-        cout << "Taip - 1" << endl;
-        cout << "Ne - 2" << endl;
-        cin >> userInput;
-    } while (!(userInput == 1 || userInput == 2));
-
-    return userInput == 1;
+    return UserInput("Įrašyti duomenys į failą?", "Taip - 1, Ne - 2");
 }
 
 // TODO : Find way to determine operating sistem system("cls");
@@ -278,16 +189,7 @@ vector<RawData> GetValidDataFromUser(vector<RawData> rawData)
 
 bool AskIfFinalGradeIsMean()
 {
-    Clear();
-    int userInput;
-
-    do
-    {
-        cout << "Skaičiuoti vidurki - 1, mediana - 2" << endl;
-        cin >> userInput;
-    } while (!(userInput == 1 || userInput == 2));
-
-    return userInput == 1;
+    return UserInput("Skaičiuoti:", "Vidurki - 1, mediana - 2");
 }
 
 vector<Student> ReadUserInput()
@@ -334,35 +236,5 @@ void PrintResult(vector<Student> localStudents, bool isMean)
          << endl;
     ;
     for (int i = 0; i < localStudents.size(); i++)
-        cout << left << setw(width) << localStudents[i].firstName << setw(width) << localStudents[i].lastName << fixed << setprecision(2) << (isMean ? localStudents[i].finalGrade : localStudents[i].medianGrade) << endl;
-}
-
-void PrintResultToFile(vector<Student> localStudents, bool isMean)
-{
-    ofstream file;
-    file.open(FileOuputPath);
-    try
-    {
-        if (file.is_open())
-        {
-            int width = WidthOfNameAndSurname;
-            file << endl
-                 << left << setw(width) << "Vardas" << setw(width) << "Pavarde"
-                 << "Galutinis " << (isMean ? "Vid." : "Med.") << endl;
-            file << string(width * 3, '-') << endl
-                 << endl;
-            ;
-            for (int i = 0; i < localStudents.size(); i++)
-                file << left << setw(width) << localStudents[i].firstName << setw(width) << localStudents[i].lastName << fixed << setprecision(2) << (isMean ? localStudents[i].finalGrade : localStudents[i].medianGrade) << endl;
-        }
-        else
-        {
-            throw runtime_error("Error opening file");
-        }
-        file.close();
-    }
-    catch (exception &e)
-    {
-        cout << e.what() << endl;
-    }
+        cout << left << setw(width) << localStudents[i].firstName << setw(width) << localStudents[i].lastName << fixed << setprecision(2) << localStudents[i].finalGrade << endl;
 }

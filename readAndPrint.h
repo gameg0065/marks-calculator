@@ -5,8 +5,9 @@
 void Clear();
 bool MenuOptions();
 vector<Student> ReadFromFile(string path);
+void SaveData(vector<RawData> rawData);
 void StartProgram();
-bool ReadFromFile();
+bool AskReadFromFile();
 bool OutputToFile();
 void PrintWelcomeText();
 void PrintResult(vector<Student> localStudents, bool isMean);
